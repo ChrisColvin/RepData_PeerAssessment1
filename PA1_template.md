@@ -65,7 +65,7 @@ Missing values are ignored in the dataset for this section of analysis.
 Calculate the total number of steps taken per day
 
 ```r
-stepsPerDay<- aggregate(activity$steps, by = list(activity$date), sum, na.rm = TRUE)
+stepsPerDay<- aggregate(activity$steps, by=list(activity$date), FUN=sum, na.rm=TRUE)
 names(stepsPerDay)<- c("date","steps")
 ```
 
@@ -75,7 +75,7 @@ names(stepsPerDay)<- c("date","steps")
 The histogram illustrates the range of steps taken each day on the x axis and counts the number of days for each count.  For example, the graph shows the user took 0 steps on 10 days.
 
 ```r
-qplot(steps, data = stepsPerDay, geom = "histogram", xlab = "Daily Steps", ylab = "# of Days", binwidth = 300)
+hist(stepsPerDay$steps, main = "Histogram of Steps Per Day", xlab = "Total Daily Steps")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
@@ -109,6 +109,10 @@ xyplot(steps ~ interval, data=meanIntervalSteps, type="l", grid=TRUE, ylab="Avg 
 
 Which interval contains the most average steps?
 
+```r
+meanIntervalSteps[which.max(meanIntervalSteps$steps),c("interval")]
+```
+
 ```
 ## [1] 835
 ```
@@ -117,6 +121,10 @@ Which interval contains the most average steps?
 ## Imputing missing values
 Calculating the number of missing values in the data set.
 
+
+```r
+nrow(activity[is.na(activity$steps),])
+```
 
 ```
 ## [1] 2304
@@ -148,7 +156,7 @@ names(allstepsPerDay)<- c("date","steps")
 The histogram illustrates the range of steps taken each day on the x axis and counts the number of days for each count.  For example, the graph shows the user took 0 steps on 10 days.
 
 ```r
-qplot(steps, data = allstepsPerDay, geom = "histogram", xlab = "Daily Steps", main = "Total steps per day (missing estimated)", ylab = "# of Days", binwidth = 300)
+hist(allstepsPerDay$steps, main = "Histogram of Steps Per Day (missing estimated)", xlab = "Total Daily Steps")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-12-1.png) 
@@ -169,11 +177,11 @@ Do these values differ from the estimates from the first part of the assignment?
 
 - The shape of the histogram remains very similar.
 - The mean and median increase since the "NAs" have values.
-- The mean and median become the same value.
+- The mean and median have the same value because the missing values were assigned the average value.
 
 What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
-- The number of steps increase since excluded values now have values.
+- The number of steps increase since missing values have been assigned "average" value.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
