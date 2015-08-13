@@ -206,7 +206,7 @@ The graph illustrates the subject starts walking later on the weekend than the w
 allmeanIntervalSteps<- aggregate(x = allActivity$steps, by = list(allActivity$interval, allActivity$day), FUN = mean, na.rm = TRUE)
 names(allmeanIntervalSteps) <- c("interval","day","steps")
 
-xyplot(steps ~ interval | day, data=allmeanIntervalSteps, type="l", grid=TRUE, layout=c(1,2), ylab="Avg Number of steps", xlab="5-min. intervals from midnight", main="Average number of steps by 5-minutes intervals - Weekdays vs Weekends")
+xyplot(steps ~ interval | day, data=allmeanIntervalSteps, type="l", grid=TRUE, layout=c(1,2), ylab="Avg Number of steps", xlab="5-min. intervals from midnight", main="Avg # of steps by 5-minutes intervals - Weekdays vs Weekends")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-16-1.png) 
